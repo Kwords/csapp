@@ -22,6 +22,29 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
+    for(int i=0;i<N;i+=8) {
+        for(int j=0;j<M;j+=8) {
+            for(int ii=i;ii<i+8;ii++) {
+                int a1=A[ii][j];
+                int a2=A[ii][j+1];
+                int a3=A[ii][j+2];
+                int a4=A[ii][j+3];
+                int a5=A[ii][j+4];
+                int a6=A[ii][j+5];
+                int a7=A[ii][j+6];
+                int a8=A[ii][j+7];
+                B[j][ii]=a1;
+                B[j+1][ii]=a2;
+                B[j+2][ii]=a3;
+                B[j+3][ii]=a4;
+
+                B[j+4][ii]=a5;
+                B[j+5][ii]=a6;
+                B[j+6][ii]=a7;
+                B[j+7][ii]=a8;
+            }
+        }
+    }
 }
 
 /* 
